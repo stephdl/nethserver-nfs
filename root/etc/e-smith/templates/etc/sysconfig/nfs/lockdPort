@@ -1,2 +1,2 @@
-LOCKD_TCPPORT={ ${nfs-lock}{lockdPort} }
-LOCKD_UDPPORT={ ${nfs-lock}{lockdPort} }
+LOCKD_TCPPORT={ ${'nfs-lock'}{'lockdPort'} }
+LOCKD_UDPPORT={ ${'nfs-lock'}{'lockdPort'} }

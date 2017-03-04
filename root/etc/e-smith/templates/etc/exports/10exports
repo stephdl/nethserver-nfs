@@ -6,7 +6,9 @@
     use esmith::NetworksDB;
     use Net::IPv4Addr qw(ipv4_in_network ipv4_parse);
     use esmith::util::network qw(isValidIP);
+    use NethServer::SSSD;
 
+    my $sssd = new NethServer::SSSD();
     my $ndb = esmith::NetworksDB->open_ro;
     my $accounts = esmith::AccountsDB->open_ro;
     my $config   = esmith::ConfigDB->open_ro;
@@ -23,7 +25,6 @@
                 convert_to_cidr($_)
             } $ndb->local_access_spec();
 
-
     my @ibays = $accounts->ibays;
 
     foreach my $ibay (@ibays) 
@@ -32,10 +33,10 @@
         my $nfsstatus = $ibay->prop("NfsStatus") || "disabled";
 
         #then we look about the host(s) allowed
-        my $nfsclient       = $ibay->prop("NfsClient") || "";
+        my $nfsclient       = $ibay->prop("AllowedIP") || "";
         my $nfslocalnetwork = $ibay->prop("NfsLocalNetwork") || "disabled";
 
-        $nfsclient = $nfsclient . ':local' if ($nfslocalnetwork eq 'enabled');
+        $nfsclient = $nfsclient . ',local' if ($nfslocalnetwork eq 'enabled');
 
         #Then we retrieve the name of the ebay
         my $key = $ibay->key;
@@ -47,53 +48,75 @@
         {
             # write the configuration
             {
-                my @IP = split /[:]/, $nfsclient;
+                my @IP = split /,/, $nfsclient;
                 foreach my $IP (@IP) 
                 {
                     #now we look about exports options
-                    my $nfsrw           = $ibay->prop("NfsRW")       || 'ro';
-                    my $nfssync         = $ibay->prop("NfsSync")     || 'sync';
-                    my $wdelay          = $ibay->prop("NfsWdelay")   || 'wdelay';
-                    my $nfssquash       = $ibay->prop("NfsSquash")   || 'root_squash';
-                    my $anonuid         = $ibay->prop("NfsAnonUid")  || '';
-                    my $anongid         = $ibay->prop("NfsAnonGid")  || '';
-                    my $secure          = $ibay->prop("NfsSecure")   || 'secure';
-                    my $hide            = $ibay->prop("NfsHide")     || 'nohide';
+                    my $nfsrw           = $ibay->prop("GroupAccess")       || 'r';
+                        $nfsrw = 'ro' if $nfsrw eq 'r';
+                    my $nfssync         = $ibay->prop("NfsSync")           || 'sync';
+                    my $wdelay          = $ibay->prop("NfsWdelay")         || 'wdelay';
+                    my $nfssquash       = $ibay->prop("NfsRootSquash")     || 'all_squash';
+                    my $anonuid         = getpwnam('nobody');
+                    my $anongid         = getgrnam('nobody');
+                    my $secure          = $ibay->prop("NfsSecure")         || 'secure';
+                    my $hide            = $ibay->prop("NfsHide")           || 'nohide';
+                    my $OwningGroup     = $ibay->prop("OwningGroup")       || '';
+                    my $userID          = $ibay->prop("NfsUserID")         || 'enabled';
+
+                    #we need to force the uid of the client
+                    if ($sssd->isAD())
+                    {
+                        $anongid = getgrnam("$OwningGroup");
+                        $anonuid = getpwnam("administrator");
+                    }
 
                     my $nfs_options = $hide . ',' . $nfssync . ',' . $wdelay;
-          
-                    if  (isValidIP($IP) && (grep { ipv4_in_network($_, $IP) } @localAccess) )    
-                    {
-                        $nfs_options =  $nfs_options . ',' . "anonuid=$anonuid"
-                                        if (($anonuid =~ m/(\d+)/) && ($anonuid !~ m/(\D+)/));
-                        $nfs_options =  $nfs_options . ',' . "anongid=$anongid"
-                                        if (($anongid =~ m/(\d+)/) && ($anongid !~ m/(\D+)/));
-                        $nfs_options = $nfs_options . ',' . $nfsrw;
-                        $nfs_options = $nfs_options . ',' . $nfssquash;
-                        $nfs_options = $nfs_options . ',' . $secure;
-                        $OUT .=  "\n/home/e-smith/files/ibays/$key/files " if ($count == '0');
-                        $OUT .=  " $IP($nfs_options)";
-                        $count++
-                    }
 
                     if ($IP eq 'local')
                     {
                         $nfsrw       = 'ro';
-                        $nfssquash   = 'root_squash';
+                        $nfssquash   = 'all_squash';
                         $secure      = 'secure';
                         $nfs_options = $nfs_options . ',' . $nfsrw;
                         $nfs_options = $nfs_options . ',' . $nfssquash;
                         $nfs_options = $nfs_options . ',' . $secure;
 
+                        if ($userID eq 'disabled') {
+                            $nfs_options =  $nfs_options . ',' . "anonuid=$anonuid"
+                                if (($anonuid =~ m/(\d+)/) && ($anonuid !~ m/(\D+)/));
+                            $nfs_options =  $nfs_options . ',' . "anongid=$anongid"
+                                if (($anongid =~ m/(\d+)/) && ($anongid !~ m/(\D+)/));
+                        }
+
                         foreach my $localAccess (@localAccess)
                         {
-                            $OUT .=  "\n/home/e-smith/files/ibays/$key/files " if ($count == '0');
+                            $OUT .=  "\n/var/lib/nethserver/ibay/$key " if ($count == '0');
                             $OUT .=  " $localAccess($nfs_options)" if $localAccess !~ '127.0.0.1';
                             $count++
                         }
+                    }
+ 
+                    elsif  (isValidIP($IP) && (grep { ipv4_in_network($_, $IP) } @localAccess))
+                    {
+                        if ($userID eq 'disabled') {
+                            $nfs_options =  $nfs_options . ',' . "anonuid=$anonuid"
+                                if (($anonuid =~ m/(\d+)/) && ($anonuid !~ m/(\D+)/));
+                            $nfs_options =  $nfs_options . ',' . "anongid=$anongid"
+                                if (($anongid =~ m/(\d+)/) && ($anongid !~ m/(\D+)/));
+                        }
+
+                        $nfs_options = $nfs_options . ',' . $nfsrw;
+                        $nfssquash = 'all_squash' if ($userID eq 'disabled');
+                        $nfs_options = $nfs_options . ',' . $nfssquash;
+                        $nfs_options = $nfs_options . ',' . $secure;
+                        $OUT .=  "\n/var/lib/nethserver/ibay/$key  " if ($count == '0');
+                        $OUT .=  " $IP($nfs_options)";
+                        $count++
                     }
                 }
             }
         }
     }
 }
+

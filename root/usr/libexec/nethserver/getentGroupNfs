@@ -1,0 +1,8 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use esmith::AccountsDB;
+my $name = $ARGV[0];
+my $accounts = esmith::AccountsDB->open_ro;
+my $gid = getgrnam ($accounts->get_prop("$name",'OwningGroup'));
+print $gid;

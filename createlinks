@@ -6,7 +6,8 @@ use esmith::Build::CreateLinks qw(:all);
 ## functions for manager panel
 ##--------------------------------------------------
 
-event_actions (nethserver-nfs-update, 'initialize-default-databases' => '00');
+my $event = 'nethserver-nfs-update';
+event_actions ( $event, 'initialize-default-databases' => '00');
 
 foreach (qw(sysconfig/nfs exports ))
 {
@@ -14,7 +15,8 @@ foreach (qw(sysconfig/nfs exports ))
     nethserver-nfs-update
     ));
 }
-#add this event for change /etc/exports with new local network
+
+#Template to expand
 foreach (qw(exports))
 {
     templates2events("/etc/$_", qw(
@@ -25,16 +27,24 @@ foreach (qw(exports))
     ));
 }
 
-foreach $event (qw(nethserver-nfs-update interface-update ibay-create ibay-delete ibay-modify))
+foreach $event (qw(nethserver-nfs-update))
 {
     event_services($event,
         'nfs-lock' => 'restart', 
-        'nfs' => 'restart' );
+        'nfs' => 'restart',
+        'rpcbind' => 'restart' );
 }
+
+
+for my $event (qw(nethserver-nfs-update interface-update ibay-create ibay-delete ibay-modify))
+{
+    event_actions ($event, 'nethserver-nfs-exportfs' => '95');
+}
+
 
 #The service rpcbind needs to be restarted before nfs service, 
 #but sometime it start before so I had to do a specific action
-for my $event (qw(nethserver-nfs-update interface-update ibay-create ibay-delete ibay-modify))
-{
-    event_actions ($event, 'nethserver-nfs-restart-rpcbind' => '05');
-}
+#for my $event (qw(nethserver-nfs-update interface-update ibay-create ibay-delete ibay-modify))
+#{
+#    event_actions ($event, 'nethserver-nfs-restart-rpcbind' => '05');
+#}

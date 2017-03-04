@@ -9,6 +9,7 @@ License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
+Requires: nethserver-samba
 Requires: nfs-utils
 Requires: nfs4-acl-tools
 BuildRequires: nethserver-devtools
@@ -25,6 +26,7 @@ configure nfs server
 %setup
 
 %build
+%{makedocs}
 perl createlinks
 
 %install
@@ -32,19 +34,19 @@ rm -rf $RPM_BUILD_ROOT
 (cd root   ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
 rm -f %{name}-%{version}-%{release}-filelist
 %{genfilelist} $RPM_BUILD_ROOT \
-    > %{name}-%{version}-%{release}-filelist
-#echo "%doc COPYING" >> %{name}-%{version}-%{release}-filelist
+  --file /usr/libexec/nethserver/getentGroupNfs 'attr(0755,root,root)' \
+> %{name}-%{version}-%{release}-filelist
 
 %post
 #enable
-/usr/bin/systemctl enable rpcbind
-/usr/bin/systemctl enable nfs
-/usr/bin/systemctl enable nfs-lock
+systemctl enable rpcbind
+systemctl enable nfs
+systemctl enable nfs-lock
 
 #start
-/usr/bin/systemctl start rpcbind
-/usr/bin/systemctl start nfs
-/usr/bin/systemctl start nfs-lock
+systemctl start rpcbind
+systemctl start nfs
+systemctl start nfs-lock
 
 %postun
 

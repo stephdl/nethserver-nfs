@@ -1,2 +1,2 @@
-STATD_PORT={ ${nfs-lock}{statdPort} }
-STATD_OUTGOING_PORT={ ${nfs-lock}{statdOutgoingPort} }
+STATD_PORT={ ${'nfs-lock'}{'statdPort'} }
+STATD_OUTGOING_PORT={ ${'nfs-lock'}{'statdOutgoingPort'} }
