@@ -1,7 +1,7 @@
 Summary: nethserver - configure nfs server
 %define name nethserver-nfs
 Name: %{name}
-%define version 0.0.1
+%define version 0.1.0
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
@@ -19,6 +19,10 @@ BuildArch: noarch
 configure nfs server
 
 %changelog
+* Sat Apr 1 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.0
+- nfs service renamed to nfs-server
+- nfs-lock service renamed to rpc-statd
+
 * Sat Mar 04 2017 stephane de Labrusse <stephdl@de-labrusse.fr>
 - initial
 
@@ -40,13 +44,13 @@ rm -f %{name}-%{version}-%{release}-filelist
 %post
 #enable
 systemctl enable rpcbind
-systemctl enable nfs
-systemctl enable nfs-lock
+systemctl enable nfs-server
+systemctl enable rpc-statd
 
 #start
 systemctl start rpcbind
-systemctl start nfs
-systemctl start nfs-lock
+systemctl start nfs-server
+systemctl start rpc-statd
 
 %postun
 

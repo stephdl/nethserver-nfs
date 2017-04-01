@@ -1,1 +1,1 @@
-MOUNTD_PORT={ $nfs{mountdPort} }
+MOUNTD_PORT={ ${'nfs-server'}{mountdPort} }
