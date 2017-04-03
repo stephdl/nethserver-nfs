@@ -1,4 +1,4 @@
 #!/usr/bin/perl
 #The service rpcbind needs to be restarted before nfs service, 
 ##but sometime it start before so I had to do a specific action
-system ('systemctl restart rpcbind') ==0 or die "Error to restart the rpcbind service : $?";
+system ('service rpcbind restart') ==0 or die "Error to restart the rpcbind service : $?";

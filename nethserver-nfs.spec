@@ -1,7 +1,7 @@
 Summary: nethserver - configure nfs server
 %define name nethserver-nfs
 Name: %{name}
-%define version 0.1.0
+%define version 0.0.1
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
@@ -10,6 +10,7 @@ Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: nethserver-samba
+Requires: nethserver-ibays
 Requires: nfs-utils
 Requires: nfs4-acl-tools
 BuildRequires: nethserver-devtools
@@ -19,12 +20,9 @@ BuildArch: noarch
 configure nfs server
 
 %changelog
-* Sat Apr 1 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.0
-- nfs service renamed to nfs-server
-- nfs-lock service renamed to rpc-statd
 
-* Sat Mar 04 2017 stephane de Labrusse <stephdl@de-labrusse.fr>
-- initial
+* Mon Apr 03 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.1.ns6
+- initial release for ns6
 
 %prep
 %setup
@@ -43,14 +41,14 @@ rm -f %{name}-%{version}-%{release}-filelist
 
 %post
 #enable
-systemctl enable rpcbind
-systemctl enable nfs-server
-systemctl enable rpc-statd
+chkconfig rpcbind on
+chkconfig nfs     on
+chkconfig nfslock on
 
 #start
-systemctl start rpcbind
-systemctl start nfs-server
-systemctl start rpc-statd
+service rpcbind start
+service nfs     start
+service nfslock start
 
 %postun
 
@@ -59,5 +57,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}-%{version}-%{release}-filelist
 %defattr(-,root,root)
-%dir %{_nseventsdir}/%{name}-update
 %doc COPYING

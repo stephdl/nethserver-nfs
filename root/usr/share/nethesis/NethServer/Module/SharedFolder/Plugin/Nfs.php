@@ -5,7 +5,7 @@ use Nethgui\System\PlatformInterface as Validate;
 use Nethgui\Controller\Table\Modify as Table;
 
 /**
- * Httpd SharedFolder plugin
+ * Nfs SharedFolder plugin
  *
  * @author stephane de labrusse <stephdl@de-labrusse.fr>
  *
@@ -16,14 +16,6 @@ class  Nfs  extends \Nethgui\Controller\Table\RowPluginAction
     protected function initializeAttributes(\Nethgui\Module\ModuleAttributesInterface $base)
     {
         return \Nethgui\Module\SimpleModuleAttributesProvider::extendModuleAttributes($base, 'Nfs', 20);
-    }
-
-    private function getGroupProvider()
-    {
-        if(!$this->groupProvider) {
-            $this->groupProvider = new \NethServer\Tool\GroupProvider($this->getPlatform());
-        }
-        return $this->groupProvider;
     }
 
 
@@ -114,8 +106,6 @@ class  Nfs  extends \Nethgui\Controller\Table\RowPluginAction
             $this->gid = $this->readgid();
         }
         $view['viewgid'] = $this->gid;
-
-        $view['isAD'] = $this->getGroupProvider()->isAD();
 
     }
 

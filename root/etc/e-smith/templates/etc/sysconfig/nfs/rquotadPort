@@ -1,1 +1,1 @@
-RQUOTAD_PORT={ ${'nfs-server'}{rquotadPort} }
+RQUOTAD_PORT={ ${'nfs'}{rquotadPort} }

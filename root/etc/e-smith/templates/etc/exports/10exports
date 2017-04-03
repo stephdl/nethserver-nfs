@@ -6,9 +6,7 @@
     use esmith::NetworksDB;
     use Net::IPv4Addr qw(ipv4_in_network ipv4_parse);
     use esmith::util::network qw(isValidIP);
-    use NethServer::SSSD;
 
-    my $sssd = new NethServer::SSSD();
     my $ndb = esmith::NetworksDB->open_ro;
     my $accounts = esmith::AccountsDB->open_ro;
     my $config   = esmith::ConfigDB->open_ro;
@@ -57,19 +55,15 @@
                     my $nfssync         = $ibay->prop("NfsSync")           || 'sync';
                     my $wdelay          = $ibay->prop("NfsWdelay")         || 'wdelay';
                     my $nfssquash       = $ibay->prop("NfsRootSquash")     || 'all_squash';
-                    my $anonuid         = getpwnam('nobody');
-                    my $anongid         = getgrnam('nobody');
+#                    my $anonuid         = getpwnam('nobody');
+#                    my $anongid         = getgrnam('nobody');
                     my $secure          = $ibay->prop("NfsSecure")         || 'secure';
                     my $hide            = $ibay->prop("NfsHide")           || 'nohide';
                     my $OwningGroup     = $ibay->prop("OwningGroup")       || '';
                     my $userID          = $ibay->prop("NfsUserID")         || 'enabled';
 
-                    #we need to force the uid of the client
-                    if ($sssd->isAD())
-                    {
-                        $anongid = getgrnam("$OwningGroup");
-                        $anonuid = getpwnam("administrator");
-                    }
+                        my $anongid = getgrnam("$OwningGroup");
+                        my $anonuid = getpwnam("administrator");
 
                     my $nfs_options = $hide . ',' . $nfssync . ',' . $wdelay;
 

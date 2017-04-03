@@ -1,2 +1,2 @@
-STATD_PORT={ ${'rpc-statd'}{'statdPort'} }
-STATD_OUTGOING_PORT={ ${'rpc-statd'}{'statdOutgoingPort'} }
+STATD_PORT={ ${'nfslock'}{'statdPort'} }
+STATD_OUTGOING_PORT={ ${'nfslock'}{'statdOutgoingPort'} }

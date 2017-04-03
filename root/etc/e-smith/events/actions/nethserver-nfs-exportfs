@@ -1,2 +1,2 @@
 #!/usr/bin/perl
-exec('/sbin/exportfs -r');
+exec('/usr/sbin/exportfs -a');
