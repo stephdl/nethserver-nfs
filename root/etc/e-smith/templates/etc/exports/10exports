@@ -63,7 +63,7 @@
                     my $userID          = $ibay->prop("NfsUserID")         || 'enabled';
 
                         my $anongid = getgrnam("$OwningGroup");
-                        my $anonuid = getpwnam("administrator");
+                        my $anonuid = getpwnam("admin");
 
                     my $nfs_options = $hide . ',' . $nfssync . ',' . $wdelay;
 
