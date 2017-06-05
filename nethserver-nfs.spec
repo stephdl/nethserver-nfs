@@ -1,7 +1,7 @@
 Summary: nethserver - configure nfs server
 %define name nethserver-nfs
 Name: %{name}
-%define version 0.1.0
+%define version 0.1.1
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
@@ -19,6 +19,9 @@ BuildArch: noarch
 configure nfs server
 
 %changelog
+* Mon Jun 5 2017stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.1
+- test if isAd is valid before to display specific AD settings
+
 * Sat Apr 1 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.0
 - nfs service renamed to nfs-server
 - nfs-lock service renamed to rpc-statd
