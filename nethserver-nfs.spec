@@ -1,7 +1,7 @@
 Summary: nethserver - configure nfs server
 %define name nethserver-nfs
 Name: %{name}
-%define version 0.0.1
+%define version 0.0.2
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
@@ -20,6 +20,8 @@ BuildArch: noarch
 configure nfs server
 
 %changelog
+* Sat Nov 11 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.2
+- return the bad IP in the nethgui message error
 
 * Mon Apr 03 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.0.1.ns6
 - initial release for ns6

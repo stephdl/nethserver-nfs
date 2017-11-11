@@ -13,3 +13,4 @@ $L['NfsRootSquash_label'] = 'Prohibit the root power (root squash)';
 $L['NfsAdvanced_label'] = 'Advanced options';
 $L['viewgid_label'] = 'Users of the remote clients must be part of this GID';
 $L['AllowWriting_label'] = 'Allow write Access';
+$L['IP address list'] = '"${0}" is not a valid IP';
