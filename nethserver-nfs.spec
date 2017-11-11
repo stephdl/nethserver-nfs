@@ -1,7 +1,7 @@
 Summary: nethserver - configure nfs server
 %define name nethserver-nfs
 Name: %{name}
-%define version 0.1.2
+%define version 0.1.3
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
@@ -19,6 +19,9 @@ BuildArch: noarch
 configure nfs server
 
 %changelog
+* Sat Nov 11 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.3
+- return the bad IP in the nethgui message error
+ 
 * Mon Jun 5 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.2
 - test if isAd is valid before to display specific AD settings
 
