@@ -24,10 +24,11 @@ foreach (qw(exports))
     ibay-create
     ibay-delete
     ibay-modify
+    nethserver-sssd-save
     ));
 }
 
-foreach $event (qw(nethserver-nfs-update))
+foreach $event (qw(nethserver-nfs-update nethserver-sssd-save))
 {
     event_services($event,
         'nfs-lock' => 'restart', 
@@ -36,7 +37,7 @@ foreach $event (qw(nethserver-nfs-update))
 }
 
 
-for my $event (qw(nethserver-nfs-update interface-update ibay-create ibay-delete ibay-modify))
+for my $event (qw(nethserver-nfs-update interface-update ibay-create ibay-delete ibay-modify nethserver-sssd-save))
 {
     event_actions ($event, 'nethserver-nfs-exportfs' => '95');
 }
