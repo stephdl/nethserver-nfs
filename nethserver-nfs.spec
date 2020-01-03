@@ -20,22 +20,7 @@ BuildArch: noarch
 %description
 configure nfs server
 
-%changelog
-* Fri Oct 12 2018 stephane de labrusse <stephane@de-labrusse.fr> - 0.1.4
-- Subscribe to the nethserver-sssd-save event
 
-* Sat Nov 11 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.3
-- return the bad IP in the nethgui message error
- 
-* Mon Jun 5 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.2
-- test if isAd is valid before to display specific AD settings
-
-* Sat Apr 1 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.0
-- nfs service renamed to nfs-server
-- nfs-lock service renamed to rpc-statd
-
-* Sat Mar 04 2017 stephane de Labrusse <stephdl@de-labrusse.fr>
-- initial
 
 %prep
 %setup
@@ -81,3 +66,20 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %dir %{_nseventsdir}/%{name}-update
 %doc COPYING
+
+%changelog
+* Fri Oct 12 2018 stephane de labrusse <stephane@de-labrusse.fr> - 0.1.4
+- Subscribe to the nethserver-sssd-save event
+
+* Sat Nov 11 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.3
+- return the bad IP in the nethgui message error
+ 
+* Mon Jun 5 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.2
+- test if isAd is valid before to display specific AD settings
+
+* Sat Apr 1 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.0
+- nfs service renamed to nfs-server
+- nfs-lock service renamed to rpc-statd
+
+* Sat Mar 04 2017 stephane de Labrusse <stephdl@de-labrusse.fr>
+- initial
