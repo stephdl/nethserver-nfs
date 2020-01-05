@@ -37,7 +37,7 @@ Vue.component('doc-info', DocInfo)
 
 import App from './App.vue'
 import Dashboard from './views/Dashboard.vue'
-import SharedFolders from './views/SharedFolders.vue'
+import SharedFolders from './views/NfsSharedFolders.vue'
 import Logs from './views/Logs.vue'
 import About from './views/About.vue'
 

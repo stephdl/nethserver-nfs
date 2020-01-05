@@ -24,16 +24,12 @@
   <div class="list-group list-view-pf list-view-pf-view no-mg-top mg-top-10">
     <div v-for="item of items" v-bind:key="item.name" class="list-group-item">
       <div class="list-view-pf-actions">
-        <button v-if="item.migrateVhost !== null" class="btn btn-primary" v-on:click="$emit('item-migrate', item)">
-            <span class="fa fa-send-o"></span>
-            {{ $t('sharedfolders.item_migrate_button')}}
-        </button>
-        <button v-else class="btn btn-default" v-on:click="$emit('item-edit', item)">
+        <button class="btn btn-default" v-on:click="$emit('item-edit', item)">
           <span class="fa fa-pencil"></span>
-          {{ $t('sharedfolders.item_edit_button')}}
+          {{ $t('NfsSharedfolders.item_edit_button')}}
         </button>
         <div class="dropup pull-right dropdown-kebab-pf">
-          <button
+          <!-- <button
             class="btn btn-link dropdown-toggle"
             type="button"
             v-bind:id="item.id + '-ddm'"
@@ -47,28 +43,28 @@
             <li>
               <a href="#" v-on:click="$emit('item-edit', item)">
                 <span class="fa fa-pencil span-right-margin"></span>
-                {{ $t('sharedfolders.item_edit_button') }}
+                {{ $t('NfsSharedfolders.item_edit_button') }}
               </a>
             </li>
             <li v-if="item.migrateVhost !== null">
                 <a href="#" v-on:click="$emit('item-migrate', item)">
                   <span class="fa fa-send-o span-right-margin"></span>
-                  {{ $t('sharedfolders.item_migrate_button') }}
+                  {{ $t('NfsSharedfolders.item_migrate_button') }}
                 </a>
             </li>
             <li>
               <a href="#" v-on:click="$emit('item-reset-permissions', item)">
                 <span class="fa fa-eraser span-right-margin"></span>
-                {{ $t('sharedfolders.item_reset_permissions_button') }}
+                {{ $t('NfsSharedfolders.item_reset_permissions_button') }}
               </a>
             </li>
             <li>
               <a href="#" v-on:click="$emit('item-delete', item)">
                 <span class="fa fa-times span-right-margin"></span>
-                {{ $t('sharedfolders.item_delete_button') }}
+                {{ $t('NfsSharedfolders.item_delete_button') }}
               </a>
             </li>
-          </ul>
+          </ul> -->
         </div>
       </div>
 
@@ -83,17 +79,17 @@
           </div>
           <div class="list-view-pf-additional-info rules-info">
               <div class="list-view-pf-additional-info-item">
-                <strong>{{ $t('sharedfolders.list_view_audit_label') }}</strong>
-                <span v-bind:class="[item.SmbAuditStatus == 'enabled' ? 'fa fa-check green' : 'fa fa-times gray']"></span>
+                <strong>{{ $t('NfsSharedfolders.NfsStatus_Enabled') }}</strong>
+                <span v-bind:class="[item.NfsStatus == 'enabled' ? 'fa fa-check green' : 'fa fa-times gray']"></span>
               </div>
               <div class="list-view-pf-additional-info-item">
-                <strong v-if="item['files'] >= 0">{{ item['files'] }}</strong>
+                <!-- <strong v-if="item['files'] >= 0">{{ item['files'] }}</strong>
                 <strong v-else>-</strong>
-                {{$t('sharedfolders.list_view_files_label')}}
+                {{$t('NfsSharedfolders.list_view_files_label')}} -->
               </div>
               <div class="list-view-pf-additional-info-item">
-                <strong v-if="item['size'] >= 0">{{ item['size'] | byteFormat }}</strong>
-                <strong v-else>-</strong>
+                <!-- <strong v-if="item['size'] >= 0">{{ item['size'] | byteFormat }}</strong>
+                <strong v-else>-</strong> -->
               </div>
           </div>
         </div>
@@ -106,7 +102,7 @@
 
 <script>
 export default {
-  name: "SharedFoldersListView",
+  name: "NfsSharedFoldersListView",
   props: {
     items: Array
   },
