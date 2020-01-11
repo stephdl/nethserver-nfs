@@ -25,8 +25,7 @@ use JSON;
 use esmith::AccountsDB;
 use esmith::event;
 use NethServer::ApiTools;
-
-require '/usr/libexec/nethserver/api/nethserver-nfs/lib/samba_functions.pl';
+use NethServer::SSSD;
 
 my $ret = undef;
 my $db = esmith::AccountsDB->open() || die("Could not open AccountsDB");
@@ -39,11 +38,23 @@ my $eventName = undef;
 
 if($input->{'action'} eq 'edit') {
     $eventName = 'ibay-modify';
-    $db->get($ibayName)->merge_props(item2props($item));
-} elsif($input->{'action'} eq 'reset-permissions') {
-    $eventName = 'ibay-reset-permissions';
-} elsif($input->{'action'} eq 'migrate') {
-    $eventName = 'vhost-migrate-ibay';
+    my $isAd = NethServer::SSSD->new()->isAD();
+    my %props = (
+        'NfsHide' => $item->{'NfsHide'} || 'nohide',
+        'NfsSecure' => $item->{'NfsSecure'} || 'secure',
+        'NfsLocalNetwork' => $item->{'NfsLocalNetwork'} || 'disabled',
+        'NfsWdelay' => $item->{'NfsWdelay'} || 'wdelay',
+        'NfsSync' => $item->{'NfsSync'} || 'sync',
+        'NfsStatus' => $item->{'NfsStatus'} || 'disabled'
+    );
+
+    if($isAd) {
+        %props = (%props,
+        'NfsUserID' => $item->{'NfsUserID'} || 'enabled',
+        'NfsRootSquash' => $item->{'NfsRootSquash'} || 'root_squash',
+        );
+    }
+    $db->get($ibayName)->merge_props(%props);
 } else {
     error();
 }
@@ -52,19 +63,13 @@ my @eventArgs = $ibayName;
 my $exitCode = 0;
 
 esmith::event::set_json_log(1);
-if(esmith::event::event_signal($eventName, @eventArgs)) {
-    $ret = {'state' => 'success'};
+my $success = esmith::event::event_signal($eventName, @eventArgs);
+if($success) {
+    NethServer::ApiTools::success();
 } else {
-    $ret = {
-        'type' => 'Error',
-        'message' => 'sharedfolders.api_update_failed',
-        'attributes' => {
-            'event_name' => $eventName,
-            'event_args' => \@eventArgs,
-        }
-    };
-    $exitCode = 1;
+    NethServer::ApiTools::error("EventError", "update_action_failed", 1555450763562);
 }
+
 
 print encode_json($ret);
 exit($exitCode);

@@ -54,6 +54,7 @@ sub mainList
         $props{'NfsWdelay'} = $record->prop('NfsWdelay') || 'wdelay';
         $props{'NfsSync'} = $record->prop('NfsSync') || 'sync';
         $props{'NfsStatus'} = $record->prop('NfsStatus') || 'enabled';
+        $props{'AllowedIP'} = $record->prop('AllowedIP') || '';
 
         if($isAd) {
             $props{'NfsUserID'} = $record->prop('NfsUserID') || 'enabled';
