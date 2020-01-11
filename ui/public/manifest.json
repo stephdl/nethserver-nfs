@@ -1,4 +1,11 @@
 {
     "version": 0,
-    "content-security-policy": "style-src 'self' 'unsafe-inline'"
+    "priority": 10,
+    "menu": {
+        "index": {
+            "label": "NethServer-nfs",
+            "order": 40
+        }
+    },
+    "content-security-policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval'"
 }

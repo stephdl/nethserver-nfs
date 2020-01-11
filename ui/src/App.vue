@@ -21,81 +21,39 @@
 -->
 
 <template>
-  <div id="app">
-    <nav
-      id="navbar-left"
-      class="nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-persistent-secondary panel-group"
-    >
-      <ul class="list-group panel">
-        <li
-          id="dashboard-item"
-          v-bind:class="[getCurrentPath('dashboard') ? 'active' : '', 'list-group-item']"
-        >
-          <a href="#/dashboard">
-            <span class="fa fa-cube"></span>
-            <span class="list-group-item-value">{{$t('dashboard.menu_title')}}</span>
-          </a>
-        </li>
-        <li class="li-empty"></li>
-        <li
-          id="sharedfolders-item"
-          v-bind:class="[getCurrentPath('sharedfolders') ? 'active' : '', 'list-group-item']"
-        >
-          <a href="#/sharedfolders">
-            <span class="fa fa-folder-open"></span>
-            <span class="list-group-item-value">{{$t('sharedfolders.menu_title')}}</span>
-          </a>
-        </li>
-        <li
-          id="logs-item"
-          v-bind:class="[getCurrentPath('logs') ? 'active' : '', 'list-group-item']"
-        >
-          <a href="#/logs">
-            <span class="fa fa-list"></span>
-            <span class="list-group-item-value">{{$t('logs.title')}}</span>
-          </a>
-        </li>
-        <li class="li-empty"></li>
-        <li
-          id="about-item"
-          v-bind:class="[getCurrentPath('about') ? 'active' : '', 'list-group-item']"
-        >
-          <a href="#/about">
-            <span class="fa fa-info"></span>
-            <span class="list-group-item-value">{{$t('about.title')}}</span>
-          </a>
-        </li>
-      </ul>
+<div id="app">
+    <nav id="navbar-left" class="nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-persistent-secondary panel-group">
+        <ul class="list-group panel">
+            <router-link tag="li" to="/dashboard" active-class="active" class="list-group-item" id="dashboard-item">
+                <a>
+                    <span class="fa fa-cube"></span>
+                    <span class="list-group-item-value">{{$t('dashboard.title')}}</span>
+                </a>
+            </router-link>
+            <li class="li-empty"></li>
+            <router-link tag="li" to="/settings" active-class="active" class="list-group-item">
+                <a>
+                    <span class="fa fa-at"></span>
+                    <span class="list-group-item-value">{{$t('settings.title')}}</span>
+                </a>
+            </router-link>
+            <li class="li-empty"></li>
+            <router-link tag="li" to="/logs" active-class="active" class="list-group-item">
+                <a>
+                    <span class="fa fa-list"></span>
+                    <span class="list-group-item-value">{{$t('logs.title')}}</span>
+                </a>
+            </router-link>
+            <router-link tag="li" to="/about" active-class="active" class="list-group-item">
+                <a>
+                    <span class="fa fa-info"></span>
+                    <span class="list-group-item-value">{{$t('about.title')}}</span>
+                </a>
+            </router-link>
+        </ul>
     </nav>
     <div class="container-fluid container-cards-pf">
-      <router-view/>
+        <router-view/>
     </div>
-  </div>
+</div>
 </template>
-
-<script>
-export default {
-  name: "App",
-  watch: {
-    $route: function(val) {
-      localStorage.setItem("samba-path", val.path);
-    }
-  },
-  mounted() {
-    var path = localStorage.getItem("samba-path") || "/";
-    this.$router.push(path);
-  },
-  methods: {
-    getCurrentPath(route, offset) {
-      if (offset) {
-        return this.$route.path.split("/")[offset] === route;
-      } else {
-        return this.$route.path.split("/")[1] === route;
-      }
-    }
-  }
-};
-</script>
-
-<style>
-</style>

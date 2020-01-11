@@ -14,19 +14,19 @@ var Filters = {
         break;
 
       case size >= 1024 && size < Math.pow(1024, 2):
-        result = Math.round((size / 1024) * 100) / 100 + " KiB";
+        result = Math.round((size / 1024) * 100) / 100 + " K";
         break;
 
       case size >= Math.pow(1024, 2) && size < Math.pow(1024, 3):
-        result = Math.round((size / Math.pow(1024, 2)) * 100) / 100 + " MiB";
+        result = Math.round((size / Math.pow(1024, 2)) * 100) / 100 + " M";
         break;
 
       case size >= Math.pow(1024, 3) && size < Math.pow(1024, 4):
-        result = Math.round((size / Math.pow(1024, 3)) * 100) / 100 + " GiB";
+        result = Math.round((size / Math.pow(1024, 3)) * 100) / 100 + " G";
         break;
 
       default:
-        result = Math.round((size / Math.pow(1024, 4)) * 100) / 100 + " TiB";
+        result = Math.round((size / Math.pow(1024, 4)) * 100) / 100 + " T";
     }
 
     return result;
@@ -128,12 +128,6 @@ var Filters = {
       return "-";
     }
     return value.length > 0 ? value.split(",").join("\n") : "-";
-  },
-  ellipsis: function(value) {
-    if (value == "-" || !value) {
-      return "-";
-    }
-    return value.length > 20 ? value.substring(0, 20) + "..." : value;
   }
 };
 
