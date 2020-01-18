@@ -125,10 +125,10 @@
                 :class="['form-group', currentSharedfolder.errors.name.hasError ? 'has-error' : '']"
               >
                 <label
-                  :class="['col-sm-3', 'control-label']"
+                  :class="['col-sm-5', 'control-label']"
                   for="textInput-modal-markup"
                 >{{$t('NfsSharedfolders.name')}}</label>
-                <div :class="'col-sm-9'">
+                <div :class="'col-sm-7'">
                   <input  
                     disabled type="text" v-model="currentSharedfolder.name" class="form-control"
                   >
@@ -144,12 +144,12 @@
               
               <div :class="['form-group', currentSharedfolder.errors.Description.hasError ? 'has-error' : '']">
                 <label
-                  :class="['col-sm-3', 'control-label']"
+                  :class="['col-sm-5', 'control-label']"
                   for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.Description')}}
                 </label>
-                <div :class="'col-sm-9'">
+                <div :class="'col-sm-7'">
                   <input disabled type="text" v-model="currentSharedfolder.Description" class="form-control">
                   <span
                     v-if="currentSharedfolder.errors.Description.hasError"
@@ -164,12 +164,12 @@
                 :class="['form-group', currentSharedfolder.errors.NfsLocalNetwork.hasError ? 'has-error' : '']"
                >
                 <label
-                    :class="['col-sm-3', 'control-label']"
+                    :class="['col-sm-5', 'control-label']"
                     for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.NfsLocalNetwork')}}
                 </label>
-                <div :class="'col-sm-9'">
+                <div :class="'col-sm-7'">
                 <input  
                     id='NfsLocalNetwork' type="checkbox" true-value="enabled" 
                     false-value="disabled" v-model="currentSharedfolder.NfsLocalNetwork" 
@@ -186,12 +186,12 @@
               <div 
                 :class="['form-group', currentSharedfolder.errors.AllowedIP.hasError ? 'has-error' : '']">
                 <label
-                  class="col-sm-3 control-label"
+                  class="col-sm-5 control-label"
                   for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.AllowedIP')}}
                 </label>
-                <div class="col-sm-9">
+                <div class="col-sm-7">
                   <textarea v-model="currentSharedfolder.AllowedIP" class="form-control"></textarea>
                   <span v-if="currentSharedfolder.errors.AllowedIP.hasError" class="help-block">
                     {{$t('validation.validation_failed')}}:
@@ -204,12 +204,12 @@
                 :class="['form-group', currentSharedfolder.errors.GroupAccess.hasError ? 'has-error' : '']"
                >
                 <label
-                    :class="['col-sm-3', 'control-label']"
+                    :class="['col-sm-5', 'control-label']"
                     for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.AllowWriting')}}
                 </label>
-                <div :class="'col-sm-9'">
+                <div :class="'col-sm-7'">
                 <input  
                     id='GroupAccess' type="checkbox" true-value="rw" 
                     false-value="r" v-model="currentSharedfolder.GroupAccess" 
@@ -228,12 +228,12 @@
                   :class="['form-group', currentSharedfolder.errors.NfsUserID.hasError ? 'has-error' : '']"
                  >
                   <label
-                      :class="['col-sm-3', 'control-label']"
+                      :class="['col-sm-5', 'control-label']"
                       for="textInput-modal-markup"
                   >
                     {{$t('NfsSharedfolders.NfsUserID')}}
                   </label>
-                  <div :class="'col-sm-9'">
+                  <div :class="'col-sm-7'">
                   <input  
                       id='NfsUserID' type="checkbox" true-value="enabled" 
                       false-value="disabled" v-model="currentSharedfolder.NfsUserID" 
@@ -251,12 +251,12 @@
                   :class="['form-group', currentSharedfolder.errors.NfsRootSquash.hasError ? 'has-error' : '']"
                  >
                   <label
-                      :class="['col-sm-3', 'control-label']"
+                      :class="['col-sm-5', 'control-label']"
                       for="textInput-modal-markup"
                   >
                     {{$t('NfsSharedfolders.NfsRootSquash')}}
                   </label>
-                  <div :class="'col-sm-9'">
+                  <div :class="'col-sm-7'">
                   <input  
                     id='NfsRootSquash' type="checkbox" true-value="root_squash" 
                     false-value="no_root_squash" v-model="currentSharedfolder.NfsRootSquash" 
@@ -274,10 +274,10 @@
                   :class="['form-group', currentSharedfolder.errors.NfsViewGid.hasError ? 'has-error' : '']"
                 >
                   <label
-                    :class="['col-sm-3', 'control-label']"
+                    :class="['col-sm-5', 'control-label']"
                     for="textInput-modal-markup"
                   >{{$t('NfsSharedfolders.NfsViewGid')}}</label>
-                  <div :class="'col-sm-9'">
+                  <div :class="'col-sm-7'">
                     <input  
                       disabled type="text" v-model="currentSharedfolder.NfsViewGid" class="form-control"
                     >
@@ -292,7 +292,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <legend class=" col-sm-3 control-label fields-section-header-pf" aria-expanded="true">
+                <legend class=" col-sm-5 control-label fields-section-header-pf" aria-expanded="true">
                   <span
                     :class="['fa fa-angle-right field-section-toggle-pf', currentSharedfolder.advanced ? 'fa-angle-down' : '']"
                   ></span>
@@ -306,12 +306,12 @@
                 :class="['form-group', currentSharedfolder.errors.NfsSync.hasError ? 'has-error' : '']"
                >
                 <label
-                    :class="['col-sm-3', 'control-label']"
+                    :class="['col-sm-5', 'control-label']"
                     for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.NfsSync')}}
                 </label>
-                <div :class="'col-sm-9'">
+                <div :class="'col-sm-7'">
                 <input  
                   id='NfsSync' type="checkbox" true-value="sync" 
                   false-value="async" v-model="currentSharedfolder.NfsSync" 
@@ -329,12 +329,12 @@
                 :class="['form-group', currentSharedfolder.errors.NfsWdelay.hasError ? 'has-error' : '']"
                >
                 <label
-                    :class="['col-sm-3', 'control-label']"
+                    :class="['col-sm-5', 'control-label']"
                     for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.NfsWdelay')}}
                 </label>
-                <div :class="'col-sm-9'">
+                <div :class="'col-sm-7'">
                 <input  
                   id='NfsWdelay' type="checkbox" true-value="wdelay" 
                   false-value="no_wdelay" v-model="currentSharedfolder.NfsWdelay" 
@@ -352,12 +352,12 @@
                 :class="['form-group', currentSharedfolder.errors.NfsSecure.hasError ? 'has-error' : '']"
                >
                 <label
-                    :class="['col-sm-3', 'control-label']"
+                    :class="['col-sm-5', 'control-label']"
                     for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.NfsSecure')}}
                 </label>
-                <div :class="'col-sm-9'">
+                <div :class="'col-sm-7'">
                 <input  
                   id='NfsSecure' type="checkbox" true-value="secure" 
                   false-value="insecure" v-model="currentSharedfolder.NfsSecure" 
@@ -375,12 +375,12 @@
                 :class="['form-group', currentSharedfolder.errors.NfsHide.hasError ? 'has-error' : '']"
                >
                 <label
-                    :class="['col-sm-3', 'control-label']"
+                    :class="['col-sm-5', 'control-label']"
                     for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.NfsHide')}}
                 </label>
-                <div :class="'col-sm-9'">
+                <div :class="'col-sm-7'">
                 <input  
                   id='NfsHide' type="checkbox" true-value="secure" 
                   false-value="insecure" v-model="currentSharedfolder.NfsHide" 
