@@ -1,4 +1,58 @@
 #!/usr/bin/php
 <?php
+/*
+ * This script is part of NethServer.
+ *
+ * NethServer is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or any later version.
+ *
+ * NethServer is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with NethServer.  If not, see COPYING.
+*/
 require_once("/usr/libexec/nethserver/api/lib/Helpers.php");
+$data = readInput();
+$v = new LegacyValidator($data);
+$cmd = $data['action'];
+$db = new EsmithDatabase('configuration');
+
+if ($data['action'] == 'update') {
+  
+      // settings validator
+    $v->declareParameter('NfsLocalNetwork',Validate::SERVICESTATUS);
+    $v->declareParameter('GroupAccess', $v->createValidator()->memberOf('r','rw'));
+    $v->declareParameter('NfsSync', $v->createValidator()->memberOf('sync','async'));
+    $v->declareParameter('NfsWdelay', $v->createValidator()->memberOf('wdelay','no_wdelay'));
+    $v->declareParameter('NfsSecure', $v->createValidator()->memberOf('secure','insecure'));
+    $v->declareParameter('NfsHide', $v->createValidator()->memberOf('nohide','hide'));
+
+    $IPs = $v->createValidator()->orValidator($v->createValidator(Validate::IP), 
+        $v->createValidator(Validate::EMPTYSTRING));
+    foreach (explode(',',$data['AllowedIP']) as $ip) {
+      if (!$IPs->evaluate($ip)) {
+        $v->addValidationError('AllowedIP', 'not_valid_ip', $ip);
+      }
+    }
+
+    $provider = $db->getProp('sssd','Provider');
+    if ($provider === 'ad') {
+      $v->declareParameter('NfsUserID', Validate::SERVICESTATUS);
+      $v->declareParameter('NfsRootSquash', $v->createValidator()->memberOf('root_squash','no_root_squash'));
+    }
+
+} elseif (($data['action'] == 'enable') || ($data['action'] == 'disable')) {
+  $v->declareParameter('NfsStatus',Validate::SERVICESTATUS);
+}
+
+# Validate the input
+if ($v->validate()) {
     success();
+} else {
+    error($v);
+}
