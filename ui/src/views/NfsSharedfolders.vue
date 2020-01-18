@@ -382,8 +382,8 @@
                 </label>
                 <div :class="'col-sm-7'">
                 <input  
-                  id='NfsHide' type="checkbox" true-value="secure" 
-                  false-value="insecure" v-model="currentSharedfolder.NfsHide" 
+                  id='NfsHide' type="checkbox" true-value="nohide" 
+                  false-value="hide" v-model="currentSharedfolder.NfsHide" 
                 >
                   <span
                     v-if="currentSharedfolder.errors.NfsHide.hasError"
