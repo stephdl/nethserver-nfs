@@ -31,10 +31,10 @@
                 </a>
             </router-link>
             <li class="li-empty"></li>
-            <router-link tag="li" to="/settings" active-class="active" class="list-group-item">
+            <router-link tag="li" to="/nfssharedfolders" active-class="active" class="list-group-item">
                 <a>
-                    <span class="fa fa-at"></span>
-                    <span class="list-group-item-value">{{$t('settings.title')}}</span>
+                    <span class="fa fa-database"></span>
+                    <span class="list-group-item-value">{{$t('NfsSharedfolders.title')}}</span>
                 </a>
             </router-link>
             <li class="li-empty"></li>

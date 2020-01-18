@@ -27,7 +27,7 @@ import VueGoodTable from "vue-good-table";
 
 import App from './App.vue'
 import Dashboard from './views/Dashboard.vue'
-import Settings from './views/Settings.vue'
+import NfsSharedfolders from './views/NfsSharedfolders.vue'
 import Logs from './views/Logs.vue'
 import About from './views/About.vue'
 
@@ -56,7 +56,7 @@ const router = new Router({
     routes: [
       { path: '/', redirect: '/dashboard'},
       { path: '/dashboard', component: Dashboard },
-      { path: '/settings', component: Settings },
+      { path: '/nfssharedfolders', component: NfsSharedfolders },
       { path: '/logs', component: Logs },
       { path: '/about', name: 'about', component: About },
     ]
