@@ -37,8 +37,8 @@ if ($cmd eq 'update') {
         NfsLocalNetwork
         NfsWdelay
         NfsSync
-        NfsStatus
-        AllowedIP   
+        AllowedIP
+        GroupAccess
     )) {
         $db->set_prop($input->{'name'}, $_, $input->{$_});
     } 
