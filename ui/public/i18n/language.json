@@ -52,7 +52,9 @@
         "NfsHide":"Browse the parent folders (nohide)",
         "edit_sharedfolder":"Edit NFS Share",
         "jobs_not_found": "No sharedfolders found",
-        "jobs_not_found_desc": "You must first create your shares with nethserver-samba"
+        "jobs_not_found_desc": "You must first create your shares with nethserver-samba",
+        "sharedfolders_updated_error": "The sharedfolders update has failed",
+        "sharedfolders_updated_ok": "The sharedfolders update has succeeded"
     },
     "jails":{
         "title": "Jails"
@@ -69,5 +71,9 @@
     "start_follow_button": "Follow",
     "stop_follow_button": "Stop following",
     "filter_label": "Regexp filter"
-    }
+  },
+  "validation":{
+    "validation_failed":"Failed validation",
+    "not_valid_ip": "This IP is not valid"
+  }
 }

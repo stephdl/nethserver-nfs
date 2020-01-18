@@ -584,15 +584,10 @@ export default {
 
           // notification
           nethserver.notifications.success = context.$i18n.t(
-            "sharedfolders.sharedfolders_" +
-              (context.currentSharedfolder.isEdit ? "updated" : "created") +
-              "_ok"
-          );
+            "NfsSharedfolders.sharedfolders_updated_ok");
+
           nethserver.notifications.error = context.$i18n.t(
-            "sharedfolders.sharedfolders_" +
-              (context.currentSharedfolder.isEdit ? "updated" : "created") +
-              "_error"
-          );
+            "NfsSharedfolders.sharedfolders_updated_error");
 
           nethserver.exec(
               ["nethserver-nfs/update"],
@@ -633,10 +628,10 @@ export default {
       var context = this;
       // notification
       nethserver.notifications.success = context.$i18n.t(
-        "sharedfolders.sharedfolders_updated_ok"
+        "NfsSharedfolders.sharedfolders_updated_ok"
       );
       nethserver.notifications.error = context.$i18n.t(
-        "sharedfolders.sharedfolders_updated_error"
+        "NfsSharedfolders.sharedfolders_updated_error"
       );
 
       // update values
