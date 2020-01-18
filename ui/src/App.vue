@@ -24,12 +24,6 @@
 <div id="app">
     <nav id="navbar-left" class="nav-pf-vertical nav-pf-vertical-with-sub-menus nav-pf-persistent-secondary panel-group">
         <ul class="list-group panel">
-            <router-link tag="li" to="/dashboard" active-class="active" class="list-group-item" id="dashboard-item">
-                <a>
-                    <span class="fa fa-cube"></span>
-                    <span class="list-group-item-value">{{$t('dashboard.title')}}</span>
-                </a>
-            </router-link>
             <li class="li-empty"></li>
             <router-link tag="li" to="/nfssharedfolders" active-class="active" class="list-group-item">
                 <a>

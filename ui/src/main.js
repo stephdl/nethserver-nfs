@@ -26,7 +26,6 @@ import DocInfo from "./directives/DocInfo.vue";
 import VueGoodTable from "vue-good-table";
 
 import App from './App.vue'
-import Dashboard from './views/Dashboard.vue'
 import NfsSharedfolders from './views/NfsSharedfolders.vue'
 import Logs from './views/Logs.vue'
 import About from './views/About.vue'
@@ -54,14 +53,13 @@ const router = new Router({
     mode: 'hash',
     base: process.env.BASE_URL,
     routes: [
-      { path: '/', redirect: '/dashboard'},
-      { path: '/dashboard', component: Dashboard },
+      { path: '/', redirect: '/nfssharedfolders'},
       { path: '/nfssharedfolders', component: NfsSharedfolders },
       { path: '/logs', component: Logs },
       { path: '/about', name: 'about', component: About },
     ]
 })
-router.replace("/dashboard")
+router.replace("/nfssharedfolders")
 
 var app = new Vue({
     i18n,
