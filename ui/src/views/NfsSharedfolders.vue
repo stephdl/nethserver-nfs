@@ -168,6 +168,12 @@
                     for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.NfsLocalNetwork')}}
+                  <doc-info
+                    :placement="'top'"
+                    :title="$t('NfsSharedfolders.NfsLocalNetwork')"
+                    :chapter="'NfsLocalNetwork'"
+                    :inline="true"
+                  ></doc-info>
                 </label>
                 <div :class="'col-sm-7'">
                 <input  
@@ -190,6 +196,12 @@
                   for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.AllowedIP')}}
+                  <doc-info
+                    :placement="'top'"
+                    :title="$t('NfsSharedfolders.AllowedIP')"
+                    :chapter="'AllowedIP'"
+                    :inline="true"
+                  ></doc-info>
                 </label>
                 <div class="col-sm-7">
                   <textarea v-model="currentSharedfolder.AllowedIP" class="form-control"></textarea>
@@ -208,6 +220,12 @@
                     for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.AllowWriting')}}
+                  <doc-info
+                    :placement="'top'"
+                    :title="$t('NfsSharedfolders.AllowWriting')"
+                    :chapter="'AllowWriting'"
+                    :inline="true"
+                  ></doc-info>
                 </label>
                 <div :class="'col-sm-7'">
                 <input  
@@ -232,6 +250,12 @@
                       for="textInput-modal-markup"
                   >
                     {{$t('NfsSharedfolders.NfsUserID')}}
+                    <doc-info
+                      :placement="'top'"
+                      :title="$t('NfsSharedfolders.NfsUserID')"
+                      :chapter="'NfsUserID'"
+                      :inline="true"
+                    ></doc-info>
                   </label>
                   <div :class="'col-sm-7'">
                   <input  
@@ -255,6 +279,12 @@
                       for="textInput-modal-markup"
                   >
                     {{$t('NfsSharedfolders.NfsRootSquash')}}
+                    <doc-info
+                      :placement="'top'"
+                      :title="$t('NfsSharedfolders.NfsRootSquash')"
+                      :chapter="'NfsRootSquash'"
+                      :inline="true"
+                    ></doc-info>
                   </label>
                   <div :class="'col-sm-7'">
                   <input  
@@ -276,7 +306,14 @@
                   <label
                     :class="['col-sm-5', 'control-label']"
                     for="textInput-modal-markup"
-                  >{{$t('NfsSharedfolders.NfsViewGid')}}</label>
+                  >{{$t('NfsSharedfolders.NfsViewGid')}}
+                  <doc-info
+                    :placement="'top'"
+                    :title="$t('NfsSharedfolders.NfsViewGid')"
+                    :chapter="'NfsViewGid'"
+                    :inline="true"
+                  ></doc-info>
+                  </label>
                   <div :class="'col-sm-7'">
                     <input  
                       disabled type="text" v-model="currentSharedfolder.NfsViewGid" class="form-control"
@@ -310,6 +347,12 @@
                     for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.NfsSync')}}
+                  <doc-info
+                    :placement="'top'"
+                    :title="$t('NfsSharedfolders.NfsSync')"
+                    :chapter="'NfsSync'"
+                    :inline="true"
+                  ></doc-info>
                 </label>
                 <div :class="'col-sm-7'">
                 <input  
@@ -333,6 +376,12 @@
                     for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.NfsWdelay')}}
+                  <doc-info
+                    :placement="'top'"
+                    :title="$t('NfsSharedfolders.NfsWdelay')"
+                    :chapter="'NfsWdelay'"
+                    :inline="true"
+                  ></doc-info>
                 </label>
                 <div :class="'col-sm-7'">
                 <input  
@@ -356,6 +405,12 @@
                     for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.NfsSecure')}}
+                  <doc-info
+                    :placement="'top'"
+                    :title="$t('NfsSharedfolders.NfsSecure')"
+                    :chapter="'NfsSecure'"
+                    :inline="true"
+                  ></doc-info>
                 </label>
                 <div :class="'col-sm-7'">
                 <input  
@@ -379,6 +434,12 @@
                     for="textInput-modal-markup"
                 >
                   {{$t('NfsSharedfolders.NfsHide')}}
+                  <doc-info
+                    :placement="'top'"
+                    :title="$t('NfsSharedfolders.NfsHide')"
+                    :chapter="'NfsHide'"
+                    :inline="true"
+                  ></doc-info>
                 </label>
                 <div :class="'col-sm-7'">
                 <input  

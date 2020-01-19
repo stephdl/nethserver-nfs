@@ -75,5 +75,17 @@
   "validation":{
     "validation_failed":"Failed validation",
     "not_valid_ip": "This IP is not valid"
+  },
+  "docs":{
+    "NfsLocalNetwork":"Quick Option to allow this share to all clients of your local network in a Read Only mode",
+    "AllowedIP":"List all allowed IP to this share (one per line).",
+    "AllowWriting":"Allow write access to the IP client list.",
+    "NfsUserID":"Use the linux acl permissions. To read or write to the share, the users of the remote nfs client must belong of the owner group GID. Otherwise if this option is not set, the gid is overstepped, this makes the share less secure but easier to set up.",
+    "NfsRootSquash":"You can forbid the power of all roots to this share, root can overstep the remote GID",
+    "NfsViewGid": "Create a new gid/group on the remote client ``groupadd -g GidNumber -o GroupName``. Add a secondary group to a user on the remote client ``usermod -a -G GidNumber UserName``",
+    "NfsSync": "Reply to requests only after the changes have been committed to stable storage. Async option allows the NFS server to violate the NFS protocol and reply to requests before any changes made by that request have been committed to stable storage (e.g. disc drive). Using this option usually improves performance, but at the cost that an unclean server restart (i.e. a crash) can cause data to be lost or corrupted.",
+    "NfsWdelay":"The NFS server will normally delay committing a write request to disc slightly if it suspects that another related write request may be in progress or may arrive soon. This allows multiple write requests to be committed to disc with the one operation which can improve performance. If an NFS server received mainly small unrelated requests, this behaviour could actually reduce performance, so no_wdelay is available to turn it off.",
+    "NfsSecure":"The secure option requires that requests originate on an Internet port less than IPPORT_RESERVED (1024). The insecure option in this entry also allows clients with NFS implementations that don't use a reserved port for NFS.",
+    "NfsHide":"Setting the nohide option on a filesystem causes it not to be hidden, and an appropriately authorised client will be able to move from the parent to that filesystem without noticing the change."
   }
 }
