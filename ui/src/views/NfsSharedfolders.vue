@@ -368,7 +368,7 @@
                 </span>
                 </div>
               </div>
-              <div  v-if= "currentSharedfolder.advanced"
+              <div  v-if= "currentSharedfolder.advanced && currentSharedfolder.NfsSync ==='sync'"
                 :class="['form-group', currentSharedfolder.errors.NfsWdelay.hasError ? 'has-error' : '']"
                >
                 <label
