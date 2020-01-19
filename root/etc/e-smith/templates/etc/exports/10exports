@@ -97,7 +97,7 @@
                         }
                     }
  
-                    elsif  (isValidIP($IP) && (grep { ipv4_in_network($_, $IP) } @localAccess))
+                    elsif  (isValidIP($IP))
                     {
                         if ($userID eq 'disabled') {
                             $nfs_options =  $nfs_options . ',' . "anonuid=$anonuid"

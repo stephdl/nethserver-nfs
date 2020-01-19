@@ -37,10 +37,8 @@
 
         if ($values =~/[\/a-zA-Z0-9_\-]+\s+(\d{1,5}\.\d{1,5}\.\d{1,5}\.\d{1,5}(\(|\/\d{2,2}\())/)
         {
-            $OUT .= "$values\n" if (isValidIP($IP) && (grep { ipv4_in_network($_, $IP) } @localAccess) );
+            $OUT .= "$values\n" if (isValidIP($IP));
             $OUT .= "##This is not an IP : $values\n" if (!isValidIP($IP));
-            $OUT .= "##Your IP is not in any Local Networks : $values\n" if (isValidIP($IP) 
-                                                    && (!grep { ipv4_in_network($_, $IP) } @localAccess));
         }
         elsif ($values =~/(\/+)\s+(\d{1,5}\.\d{1,5}\.\d{1,5}\.\d{1,5})/)
         {
