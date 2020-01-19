@@ -32,9 +32,14 @@ if ($data['action'] == 'update') {
     $v->declareParameter('NfsSecure', $v->createValidator()->memberOf('secure','insecure'));
     $v->declareParameter('NfsHide', $v->createValidator()->memberOf('nohide','hide'));
 
-    $IPs = $v->createValidator()->orValidator($v->createValidator(Validate::IP), 
+    $ipArray = explode(',',$data['AllowedIP']);
+    $hasDuplicates = count($ipArray) > count(array_unique($ipArray)); 
+    if ( $hasDuplicates ) {
+        $v->addValidationError('AllowedIP', 'IP_are_listed_twice');
+    }
+    $IPs = $v->createValidator()->orValidator($v->createValidator(Validate::IP),
         $v->createValidator(Validate::EMPTYSTRING));
-    foreach (explode(',',$data['AllowedIP']) as $ip) {
+    foreach ($ipArray as $ip) {
       if (!$IPs->evaluate($ip)) {
         $v->addValidationError('AllowedIP', 'not_valid_ip', $ip);
       }

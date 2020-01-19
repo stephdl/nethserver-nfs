@@ -74,7 +74,8 @@
   },
   "validation":{
     "validation_failed":"Failed validation",
-    "not_valid_ip": "This IP is not valid"
+    "not_valid_ip": "This IP is not valid",
+    "IP_are_listed_twice": "Some IP are listed several times"
   },
   "docs":{
     "NfsLocalNetwork":"Quick Option to allow this share to all clients of your local network in a Read Only mode",
