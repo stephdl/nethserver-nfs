@@ -1,0 +1,22 @@
+{
+    "id": "nethserver-nfs",
+    "name": "NFS server",
+    "summary": "NFS file server compatible with Linux clients",
+    "description": "Share files with NFS",
+    "homepage": "https://github.com/stephdl/nethserver-nfs",
+    "url": "",
+    "provides": ["nethserver-nfs"],
+    "release": {
+        "version": "_RELEASE_"
+    },
+    "tags": ["nfs","file"],
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/stephdl/dev/issues"
+    },
+    "author": {
+        "name": "Stephane de Labrusse",
+        "url": "https://github.com/stephdl/nethserver-nfs",
+        "email": "stephdl@de-labrusse.fr"
+    }
+}

@@ -1,0 +1,11 @@
+#
+# API delegation for nethserver-nfs
+#
+
+Cmnd_Alias NSAPI_NETHSERVER_NFS = \
+    /usr/libexec/nethserver/api/nethserver-nfs/read, \
+    /usr/libexec/nethserver/api/nethserver-nfs/update, \
+    /usr/libexec/nethserver/api/nethserver-nfs/validate 
+
+# server-manager does not require a tty
+Defaults!NSAPI_NETHSERVER_NFS !requiretty

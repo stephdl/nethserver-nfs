@@ -1,13 +1,15 @@
 Summary: nethserver - configure nfs server
 %define name nethserver-nfs
 Name: %{name}
-%define version 0.1.4
+%define version 1.0.0
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
+# Build Source1 by executing prep-sources
+Source1: %{name}-ui.tar.gz
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: nethserver-samba
 Requires: nfs-utils
@@ -18,22 +20,7 @@ BuildArch: noarch
 %description
 configure nfs server
 
-%changelog
-* Fri Oct 12 2018 stephane de labrusse <stephane@de-labrusse.fr> - 0.1.4
-- Subscribe to the nethserver-sssd-save event
 
-* Sat Nov 11 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.3
-- return the bad IP in the nethgui message error
- 
-* Mon Jun 5 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.2
-- test if isAd is valid before to display specific AD settings
-
-* Sat Apr 1 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.0
-- nfs service renamed to nfs-server
-- nfs-lock service renamed to rpc-statd
-
-* Sat Mar 04 2017 stephane de Labrusse <stephdl@de-labrusse.fr>
-- initial
 
 %prep
 %setup
@@ -41,9 +28,18 @@ configure nfs server
 %build
 %{makedocs}
 perl createlinks
+sed -i 's/_RELEASE_/%{version}/' %{name}.json
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
+mkdir -p %{buildroot}/usr/share/cockpit/%{name}/
+mkdir -p %{buildroot}/usr/share/cockpit/nethserver/applications/
+mkdir -p %{buildroot}/usr/libexec/nethserver/api/%{name}/
+tar xf %{SOURCE1} -C %{buildroot}/usr/share/cockpit/%{name}/
+cp -a %{name}.json %{buildroot}/usr/share/cockpit/nethserver/applications/
+cp -a api/* %{buildroot}/usr/libexec/nethserver/api/%{name}/
+
 (cd root   ; find . -depth -print | cpio -dump $RPM_BUILD_ROOT)
 rm -f %{name}-%{version}-%{release}-filelist
 %{genfilelist} $RPM_BUILD_ROOT \
@@ -70,3 +66,23 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %dir %{_nseventsdir}/%{name}-update
 %doc COPYING
+
+%changelog
+* Sun Jan 19 2020 stephane de labrusse <stephane@de-labrusse.fr> - 1.0.0
+- Cockpit panels
+
+* Fri Oct 12 2018 stephane de labrusse <stephane@de-labrusse.fr> - 0.1.4
+- Subscribe to the nethserver-sssd-save event
+
+* Sat Nov 11 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.3
+- return the bad IP in the nethgui message error
+ 
+* Mon Jun 5 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.2
+- test if isAd is valid before to display specific AD settings
+
+* Sat Apr 1 2017 stephane de Labrusse <stephdl@de-labrusse.fr> - 0.1.0
+- nfs service renamed to nfs-server
+- nfs-lock service renamed to rpc-statd
+
+* Sat Mar 04 2017 stephane de Labrusse <stephdl@de-labrusse.fr>
+- initial

@@ -1,0 +1,69 @@
+#!/usr/bin/perl
+#
+# This script is part of NethServer.
+#
+# NethServer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License,
+# or any later version.
+#
+# NethServer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with NethServer.  If not, see COPYING.
+#
+
+use strict;
+use esmith::AccountsDB;
+use esmith::event;
+use JSON;
+use NethServer::ApiTools;
+use NethServer::SSSD;
+
+my $eventName = 'ibay-modify';
+my @eventArgs = ();
+my $ret;
+my $db = esmith::AccountsDB->open();
+my $input = NethServer::ApiTools::readInput();
+my $cmd = $input->{'action'};
+    my $isAd = NethServer::SSSD->new()->isAD();
+if ($cmd eq 'update') {
+    foreach (qw (
+        NfsHide
+        NfsSecure
+        NfsLocalNetwork
+        NfsWdelay
+        NfsSync
+        AllowedIP
+        GroupAccess
+    )) {
+        $db->set_prop($input->{'name'}, $_, $input->{$_});
+    } 
+    if($isAd) {
+        foreach (qw (
+            NfsUserID
+            NfsRootSquash
+        )) {
+            $db->set_prop($input->{'name'}, $_, $input->{$_});
+        }
+    }
+} elsif ($cmd eq 'enable') {
+    $db->set_prop($input->{'name'}, 'NfsStatus', 'enabled');
+} elsif ($cmd eq 'disable') {
+    $db->set_prop($input->{'name'}, 'NfsStatus', 'disabled');
+} else {
+    error();
+}
+
+esmith::event::set_json_log(1);
+
+if(esmith::event::event_signal($eventName, $input->{'name'})) {
+    NethServer::ApiTools::success();
+} else {
+    NethServer::ApiTools::error("EventError", "update_action_failed", 1559997785);
+}
+
+print encode_json($ret);

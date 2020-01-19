@@ -1,0 +1,71 @@
+#!/usr/bin/perl
+
+#
+# Copyright (C) 2019 Nethesis S.r.l.
+# http://www.nethesis.it - nethserver@nethesis.it
+#
+# This script is part of NethServer.
+#
+# NethServer is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License,
+# or any later version.
+#
+# NethServer is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with NethServer.  If not, see COPYING.
+#
+
+use strict;
+use JSON;
+use esmith::ConfigDB;
+use esmith::AccountsDB;
+use NethServer::ApiTools;
+use NethServer::SSSD;
+
+my $inputData = NethServer::ApiTools::readInput();
+my $ret = undef;
+
+if($inputData->{'action'} eq 'list') {
+    $ret = mainList();
+} else {
+    exit(1);
+}
+
+print encode_json($ret);
+
+sub mainList
+{
+    my $isAd = NethServer::SSSD->new()->isAD();
+    my $adb = esmith::AccountsDB->open_ro();
+    my $cdb = esmith::ConfigDB->open_ro();
+    my @sfs = ();
+    foreach my $record ($adb->get_all_by_prop('type' => 'ibay')) {
+        my %props = $record->props();
+        delete $props{'type'};
+        $props{'name'} = $record->key();
+        $props{'NfsHide'} = $record->prop('NfsHide') || 'nohide';
+        $props{'NfsSecure'} = $record->prop('NfsSecure') || 'secure';
+        $props{'NfsLocalNetwork'} = $record->prop('NfsLocalNetwork') || 'disabled';
+        $props{'NfsWdelay'} = $record->prop('NfsWdelay') || 'wdelay';
+        $props{'NfsSync'} = $record->prop('NfsSync') || 'sync';
+        $props{'NfsStatus'} = $record->prop('NfsStatus') || 'disabled';
+        $props{'AllowedIP'} = $record->prop('AllowedIP') || '';
+
+        if($isAd) {
+            $props{'NfsUserID'} = $record->prop('NfsUserID') || 'enabled';
+            $props{'NfsRootSquash'} = $record->prop('NfsRootSquash') || 'root_squash';
+            $props{'NfsViewGid'} = `/usr/libexec/nethserver/getentGroupNfs $props{'name'}`|| 'FIXME';
+        }
+        push @sfs, \%props;
+    };
+
+    return {
+        'accountsProvider' => $cdb->get_prop('sssd', 'Provider') || 'none',
+        'sharedfolders' => \@sfs,
+    }
+}
