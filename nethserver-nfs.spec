@@ -1,7 +1,7 @@
 Summary: nethserver - configure nfs server
 %define name nethserver-nfs
 Name: %{name}
-%define version 0.1.4
+%define version 1.0.0
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
@@ -68,6 +68,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING
 
 %changelog
+* Sun Jan 19 2020 stephane de labrusse <stephane@de-labrusse.fr> - 1.0.0
+- Cockpit panels
+
 * Fri Oct 12 2018 stephane de labrusse <stephane@de-labrusse.fr> - 0.1.4
 - Subscribe to the nethserver-sssd-save event
 
