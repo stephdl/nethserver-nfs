@@ -1,7 +1,7 @@
 Summary: nethserver - configure nfs server
 %define name nethserver-nfs
 Name: %{name}
-%define version 1.0.0
+%define version 1.0.1
 %define release 1
 Version: %{version}
 Release: %{release}%{?dist}
@@ -66,8 +66,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %dir %{_nseventsdir}/%{name}-update
 %doc COPYING
+%attr(0440,root,root) /etc/sudoers.d/50_nsapi_nethserver_nfs
 
 %changelog
+* Thu Mar 05 2020  stephane de Labrusse <stephdl@de-labrusse.fr> 1.0.1
+- Fix bad sudoers permission
+
 * Sun Jan 19 2020 stephane de labrusse <stephane@de-labrusse.fr> - 1.0.0
 - Cockpit panels
 
